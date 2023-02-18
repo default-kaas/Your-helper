@@ -33,12 +33,15 @@
         </button>
       </div>
     </div>
-    <p>{{ hello?.greeting }}</p>
+    <p>{{ hello?.greeting }} - {{ test?.join(", ") }}</p>
   </form>
 </template>
 
 <script setup lang="ts">
 async function sendPostRequest() {}
 const { $client } = useNuxtApp();
-const { data: hello } = await $client.hello.useQuery({ text: "client" });
+const { data: hello } = await $client.helloWorldRouter.hello.useQuery({
+  text: "client",
+});
+const { data: test } = await $client.ticketsRouter.tickets.useQuery();
 </script>

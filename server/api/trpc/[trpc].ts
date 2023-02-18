@@ -3,23 +3,13 @@
  * On a bigger app, you will probably want to split this file up into multiple files.
  */
 import { createNuxtApiHandler } from 'trpc-nuxt'
-import { publicProcedure, router } from '~/server/trpc/trpc'
-import { z } from 'zod'
+import { router } from '~/server/trpc/trpc'
+import { helloWorldRouter } from '~/server/api/trpc/helloWorld/helloWorld'
+import { ticketsRouter } from '~/server/api/trpc/ticket/ticket'
 
 export const appRouter = router({
-  hello: publicProcedure
-    // This is the input schema of your procedure
-    .input(
-      z.object({
-        text: z.string().nullish(),
-      }),
-    )
-    .query(({ input }) => {
-      // This is what you're returning to your client
-      return {
-        greeting: `hello ${input?.text ?? 'world'}`,
-      }
-    }),
+  helloWorldRouter,
+  ticketsRouter
 })
 
 // export only the type definition of the API
