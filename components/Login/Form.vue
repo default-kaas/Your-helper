@@ -8,6 +8,7 @@
       </h1>
       <div class="mb-4">
         <input
+          v-model="credentials.userName"
           type="text"
           class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600"
           placeholder="Username"
@@ -15,6 +16,7 @@
       </div>
       <div class="mb-4">
         <input
+          v-model="credentials.password"
           type="password"
           class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600"
           id="exampleFormControlInput1"
@@ -33,15 +35,21 @@
         </button>
       </div>
     </div>
-    <p>{{ hello?.greeting }} - {{ test?.join(", ") }}</p>
   </form>
 </template>
 
 <script setup lang="ts">
-async function sendPostRequest() {}
-const { $client } = useNuxtApp();
-const { data: hello } = await $client.helloWorldRouter.hello.useQuery({
-  text: "client",
+import type { PostAuthenticationInput } from "@/composables/useTrpcClient";
+const credentials = ref<PostAuthenticationInput>({
+  userName: "",
+  password: "",
 });
-const { data: test } = await $client.ticketsRouter.tickets.useQuery();
+async function sendPostRequest() {
+  const reponse = await usePostAuthentication(credentials.value);
+  if (reponse.error.value) {
+    console.log(useTRPCValidation(reponse.error.value));
+  } else {
+    const value = reponse.data.value?.jwt;
+  }
+}
 </script>

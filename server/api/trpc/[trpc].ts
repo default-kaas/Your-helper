@@ -4,11 +4,11 @@
  */
 import { createNuxtApiHandler } from 'trpc-nuxt'
 import { router } from '~/server/trpc/trpc'
-import { helloWorldRouter } from '~/server/api/trpc/helloWorld/helloWorld'
-import { ticketsRouter } from '~/server/api/trpc/ticket/ticket'
+import { authenticationRouter } from '~/server/api/trpc/authentication/authentication'
+import { ticketsRouter } from '~/server/api/trpc/ticket/tickets'
 
 export const appRouter = router({
-  helloWorldRouter,
+  authenticationRouter,
   ticketsRouter
 })
 

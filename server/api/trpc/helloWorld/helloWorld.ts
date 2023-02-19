@@ -1,6 +1,6 @@
 import { publicProcedure, router } from '~/server/trpc/trpc'
 import { z } from 'zod';
-
+// TODO: remove this example after creation of a get singular and get multiple end point
 export const helloWorldRouter = router({
   hello: publicProcedure
     // This is the input schema of your procedure
