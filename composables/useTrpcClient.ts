@@ -1,20 +1,44 @@
 import { TRPCClientError } from '@trpc/client'
 import type { inferRouterOutputs, inferRouterInputs } from "@trpc/server";
 import type { AppRouter } from "@/server/api/trpc/[trpc]";
+import { AsyncDataExecuteOptions, _AsyncData } from 'nuxt/dist/app/composables/asyncData';
+import type { Ref } from 'vue';
+
 type RouterOutput = inferRouterOutputs<AppRouter>;
 type RouterInput = inferRouterInputs<AppRouter>;
 type ErrorOutput = TRPCClientError<AppRouter>
 
-// TODO: make this part of an wrapper function to wrap the response
-export function useTRPCValidation(errorResponse: ErrorOutput){
-  return JSON.parse(errorResponse.message) as [{message: string}]
+interface _AsyncResponse<DataT> {
+  data: Ref<DataT>;
+  pending: Ref<boolean>;
+  refresh: (opts?: AsyncDataExecuteOptions) => Promise<void>;
+  execute: (opts?: AsyncDataExecuteOptions) => Promise<void>;
+}
+
+export function useResponseDataIsNotNull<T>(
+  toBeDetermined: _AsyncData<T, ErrorOutput | null> | _AsyncResponse<T>
+): toBeDetermined is _AsyncResponse<T> {
+  if(toBeDetermined.data === null || toBeDetermined.data.value === null){
+    return false
+  }
+  return true 
+}
+
+// TODO: make function that displays pop ups
+// TODO: make function that returns error for a form
+export function useDisplayError<T>(response: _AsyncData<T, ErrorOutput | null>) {
+  if(response.error.value != null){
+    const errorMessages = JSON.parse(response.error.value.message) as [{message: string}] 
+    for(let i = 0; i < errorMessages.length; i++){
+      console.log(errorMessages[i])
+    }
+  }
 }
 
 //* Authentication
 export type PostAuthenticationInput = RouterInput['authenticationRouter']['authentication']
-type PostAuthenticationOutput = RouterOutput['authenticationRouter']['authentication']
+export type PostAuthenticationOutput = RouterOutput['authenticationRouter']['authentication']
 export async function usePostAuthentication(input: PostAuthenticationInput) {
   const { $client } = useNuxtApp()
-  // TODO: make use of a wrapper function to make the use of the using function easier
   return useAsyncData<PostAuthenticationOutput, ErrorOutput>(() => $client.authenticationRouter.authentication.mutate(input))
 }
