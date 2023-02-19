@@ -39,10 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  PostAuthenticationInput,
-  PostAuthenticationOutput,
-} from "@/composables/useTrpcClient";
+import type { PostAuthenticationInput } from "@/composables/useTrpcClient";
 import { _AsyncData } from "nuxt/dist/app/composables/asyncData";
 const credentials = ref<PostAuthenticationInput>({
   userName: "",
@@ -50,7 +47,7 @@ const credentials = ref<PostAuthenticationInput>({
 });
 async function sendPostRequest() {
   const reponse = await usePostAuthentication(credentials.value);
-  if (useResponseDataIsNotNull<PostAuthenticationOutput>(reponse)) {
+  if (useResponseDataIsNotNull(reponse)) {
     reponse.data.value;
   }
   useDisplayError(reponse);
