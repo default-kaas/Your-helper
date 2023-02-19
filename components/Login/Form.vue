@@ -40,7 +40,6 @@
 
 <script setup lang="ts">
 import type { PostAuthenticationInput } from "@/composables/useTrpcClient";
-import { _AsyncData } from "nuxt/dist/app/composables/asyncData";
 const credentials = ref<PostAuthenticationInput>({
   userName: "",
   password: "",
