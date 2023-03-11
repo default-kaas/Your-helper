@@ -4,7 +4,8 @@
     <TextH1 :text="'Hour registration'" />
     <input v-on:change="readExcel" type="file" id="input" />
     <table
-      class="table-auto border-separate border-spacing-x-2 border-spacing-y-8"
+      v-if="excelDataRowsFile"
+      class="table-auto border-separate border-spacing-x-2 border-spacing-y-2"
     >
       <template v-for="excelDataRow in excelDataRowsFile">
         <!-- test
@@ -12,7 +13,7 @@
         {{ isTitleField(excelDataRow) }}
         {{ isHourRegestrationField(excelDataRow) }} -->
         <thead v-if="useIsTitleField(excelDataRow)">
-          <tr class="text-left">
+          <tr class="text-left font-semibold">
             <th>{{ excelDataRow.dayTitle }}</th>
             <th>{{ excelDataRow.hoursTitle }}</th>
             <th>{{ excelDataRow.projectTitle }}</th>
@@ -26,7 +27,10 @@
             class="border-b border-dividerDark2"
             v-if="useIsWeekNumberField(excelDataRow)"
           >
-            <td>{{ excelDataRow.date }}</td>
+            <td class="flex">
+              <TextHashTag />
+              <h3 class="font-semibold">{{ excelDataRow.date }}</h3>
+            </td>
             <td />
             <td />
             <td />
@@ -61,4 +65,5 @@ async function readExcel() {
   }
 }
 const excelDataRowsFile = ref<ReadExcelType>();
+const indexCounter = ref(0);
 </script>
