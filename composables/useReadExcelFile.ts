@@ -2,6 +2,7 @@
 import readXlsxFile from "read-excel-file";
 
 type titleField = {
+  typeOfField: String;
   dayTitle: String;
   hoursTitle: String;
   projectTitle: String;
@@ -11,6 +12,7 @@ type titleField = {
 };
 
 type hourRegestrationField = {
+  typeOfField: String;
   date: Date;
   hours: Number;
   project: String;
@@ -20,13 +22,23 @@ type hourRegestrationField = {
 };
 
 type weekNumberField = {
+  typeOfField: String;
   date: String;
 };
 
 export function useIsTitleField(
   field: titleField | hourRegestrationField | weekNumberField | undefined
 ): field is titleField {
-  if (field && (<titleField>field).dayTitle !== undefined) {
+  if (field && field.typeOfField === 'titleField') {
+    return true;
+  }
+  return false;
+}
+
+export function useIsWeekNumberField(
+  field: titleField | hourRegestrationField | weekNumberField | undefined
+): field is weekNumberField {
+  if (field && field.typeOfField === 'weekNumberField') {
     return true;
   }
   return false;
@@ -35,7 +47,7 @@ export function useIsTitleField(
 export function useIsHourRegestrationField(
   field: titleField | hourRegestrationField | weekNumberField | undefined
 ): field is hourRegestrationField {
-  if (field && (<hourRegestrationField>field).hours !== undefined) {
+  if (field && field.typeOfField === 'hourRegestrationField') {
     return true;
   }
   return false;
@@ -46,17 +58,21 @@ export type ReadExcelType = null | [titleField | hourRegestrationField | weekNum
 export async function useReadExcel(input: HTMLElement) {
   if (input?.files) {
     return readXlsxFile(input?.files[0]).then((rows) => {
+      console.log(rows)
       // TODO: find a better way to parse the row array to an type array
       const parsedResult = rows.map((row) => {
-        console.log(row);
+        // console.log(row);
         // TODO: find a better way to parse this
         if (row[1] === null) {
           return {
+            typeOfField: 'weekNumberField',
             date: row[0],
           } as weekNumberField;
-        } else if (row[1] && row[1] instanceof String) {
+        } else if (row[1] && !(typeof row[1] ===  'number')) {
+          console.log('Title?')
           return {
             // TODO: find a better way to map array values to an interface
+            typeOfField: 'titleField',
             dayTitle: row[0] as String,
             hoursTitle: row[1] as String,
             projectTitle: row[2] as String,
@@ -64,9 +80,10 @@ export async function useReadExcel(input: HTMLElement) {
             descriptionTitle: row[4] as String,
             wbsoHoursTitle: row[5] as String,
           } as titleField;
-        } else if (row[1] && row[0] instanceof Date) {
+        } else if (row[1] !== null) {
           // TODO: find a better way to map array values to an interface
           return {
+            typeOfField: 'hourRegestrationField',
             date: row[0] as unknown as Date,
             hours: row[1] as Number,
             project: row[2] as String,
