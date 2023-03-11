@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1 class="text-textDark1">Excel reader test</h1>
+    <!-- <h1 class="text-textDark1">Excel reader test</h1> -->
+    <TextH1 :text="'Hour registration'" />
     <input v-on:change="readExcel" type="file" id="input" />
     <table>
       <div v-for="excelDataRow in excelDataRowsFile">

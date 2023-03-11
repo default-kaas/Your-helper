@@ -1,11 +1,7 @@
 <template>
   <form class="flex justify-center">
     <div class="">
-      <h1
-        class="flex justify-center text-xl font-semibold mt-1 mb-4 pb-1 text-white"
-      >
-        Login into Your helper
-      </h1>
+      <TextH1 :text="'Login'" />
       <div class="mb-4">
         <input
           v-model="credentials.userName"
@@ -25,7 +21,7 @@
       </div>
       <div class="text-center pt-1 mb-12 pb-1">
         <button
-          class="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md bg-slate-900 hover:bg-slate-700 hover:shadow-lg focus:shadow-lg focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
+          class="inline-block px-6 py-2.5 text-greenMain border border-greenMain font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-grayDark4 hover:shadow-lg focus:shadow-lg focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
           type="button"
           data-mdb-ripple="true"
           data-mdb-ripple-color="light"

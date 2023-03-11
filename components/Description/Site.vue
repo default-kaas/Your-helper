@@ -1,11 +1,7 @@
 <template>
   <div class="flex justify-center algin">
     <div class="max-w-4xl">
-      <h1 class="text-4xl flex font-semibold">
-        <div class="text-greenMain mr-1 font-medium">#</div>
-        About
-      </h1>
-      <hr class="border-dividerDark2 my-3" />
+      <TextH1 :text="'About'" />
       <p>
         This site has being designed to learn a bit more about Nuxt 3. And help
         with demontrating the capabilities of Nuxt 3 and other technologies such
