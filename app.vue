@@ -7,6 +7,6 @@
 
 <script setup lang="ts">
 onMounted(() => {
-  document.body.className = "bg-zinc-700 text-white";
+  document.body.className = "bg-blackMain text-textDark1 font-sans";
 });
 </script>

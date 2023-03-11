@@ -1,5 +1,5 @@
 <template>
-  <ul class="list-none list-inside">
+  <ul class="list-disc list-inside marker:text-textDark3">
     <slot />
   </ul>
 </template>

@@ -8,6 +8,7 @@ type RouterOutput = inferRouterOutputs<AppRouter>;
 type RouterInput = inferRouterInputs<AppRouter>;
 type ErrorOutput = TRPCClientError<AppRouter>
 
+// #region Check if response data is not null
 interface _AsyncResponse<DataT> {
   data: Ref<DataT>;
   pending: Ref<boolean>;
@@ -23,7 +24,8 @@ export function useResponseDataIsNotNull<T>(
   }
   return true 
 }
-
+// #endregion
+// #region error handling
 // TODO: make function that displays pop ups
 // TODO: make function that returns error for a form
 export function useDisplayError<T>(response: _AsyncData<T, ErrorOutput | null>) {
@@ -34,7 +36,8 @@ export function useDisplayError<T>(response: _AsyncData<T, ErrorOutput | null>) 
     }
   }
 }
-
+// #endregion
+// #region end - points
 //* Authentication
 export type PostAuthenticationInput = RouterInput['authenticationRouter']['authentication']
 export type PostAuthenticationOutput = RouterOutput['authenticationRouter']['authentication']
@@ -42,3 +45,4 @@ export async function usePostAuthentication(input: PostAuthenticationInput) {
   const { $client } = useNuxtApp()
   return useAsyncData<PostAuthenticationOutput, ErrorOutput>(() => $client.authenticationRouter.authentication.mutate(input))
 }
+// #endregion
