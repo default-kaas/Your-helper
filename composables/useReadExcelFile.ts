@@ -55,7 +55,6 @@ export async function useReadExcel(input: HTMLElement) {
             date: row[0],
           } as weekNumberField;
         } else if (row[1] && row[1] instanceof String) {
-          console.log("check if", row);
           return {
             // TODO: find a better way to map array values to an interface
             dayTitle: row[0] as String,
