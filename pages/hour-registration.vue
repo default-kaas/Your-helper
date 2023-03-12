@@ -2,48 +2,86 @@
   <div>
     <TextH1 :text="'Hour registration'" />
     <input v-on:change="readExcel" type="file" id="input" />
-    <table
-      v-if="excelDataRowsFile"
-      class="table-auto border-separate border-spacing-x-3 border-spacing-y-2"
-    >
-      <thead>
-        <tr class="text-left font-semibold sticky top-0 bg-blackMain">
-          <th>Dag</th>
-          <th>Uren</th>
-          <th>Projects</th>
-          <th>Catergorie</th>
-          <th>Evt. aanvullende beschrijving</th>
-          <th>WBSO</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template v-for="values in excelDataRowsFile">
-          <tr class="border-b border-dividerDark2">
-            <td class="flex">
-              <TextHashTag />
-              <h3 class="font-semibold">
-                Week {{ values[0].weekNumberBasedOnDate }}
-              </h3>
-            </td>
-            <td />
-            <td />
-            <td />
-            <td />
-            <td />
+    <template v-if="excelDataRowsFile">
+      <!-- Table of contents -->
+      <div class="fixed left-12 py-3 px-6 border border-dividerDark2 rounded">
+        <div class="flex py-1">
+          <h2 class="font-semibold">Weeks:</h2>
+        </div>
+        <div class="flex py-1">
+          <TextHashTag />
+          <h3 class="font-semibold">Week 1</h3>
+        </div>
+        <div class="flex py-1">
+          <TextHashTag />
+          <h3 class="font-semibold">Week 2</h3>
+        </div>
+        <div class="flex py-1">
+          <TextHashTag />
+          <h3 class="font-semibold">Week 3</h3>
+        </div>
+      </div>
+      <!-- Stats -->
+      <div class="fixed right-12 py-3 px-6 border border-dividerDark2 rounded">
+        <div class="flex py-1">
+          <h2 class="font-semibold">Weeks:</h2>
+        </div>
+        <div class="flex py-1">
+          <TextHashTag />
+          <h3 class="font-semibold">Week 1</h3>
+        </div>
+        <div class="flex py-1">
+          <TextHashTag />
+          <h3 class="font-semibold">Week 2</h3>
+        </div>
+        <div class="flex py-1">
+          <TextHashTag />
+          <h3 class="font-semibold">Week 3</h3>
+        </div>
+      </div>
+      <!-- Hourfrom table -->
+      <table class="table-auto border-collapse">
+        <thead class="shadow-lg shadow-white-500/50">
+          <tr class="text-left font-semibold sticky top-0 bg-blackMain">
+            <th class="py-2 px-3 border-b border-dividerDark2">Dag</th>
+            <th class="pr-3 border-b border-dividerDark2">Uren</th>
+            <th class="pr-3">Projects</th>
+            <th class="pr-3">Catergorie</th>
+            <th class="pr-3">Evt. aanvullende beschrijving</th>
+            <th class="pr-3">WBSO</th>
           </tr>
-          <template v-for="value in values">
-            <tr class="border-b border-dividerDark2">
-              <td>{{ useDateDayMonthYear(value.date) }}</td>
-              <td>{{ value.hours }}</td>
-              <td>{{ value.project }}</td>
-              <td>{{ value.type }}</td>
-              <td>{{ value.description }}</td>
-              <td>{{ value.wbsoHours }}</td>
+        </thead>
+        <tbody>
+          <template v-for="values in excelDataRowsFile">
+            <tr>
+              <td class="pl-3 pt-1 py-2 border-t border-dividerDark2">
+                <div class="flex">
+                  <TextHashTag />
+                  <h3 class="font-semibold">
+                    Week {{ values[0].weekNumberBasedOnDate }}
+                  </h3>
+                </div>
+              </td>
+              <td class="pt-1 py-1 border-t border-dividerDark2" />
+              <td class="pt-1 py-1 border-t border-dividerDark2" />
+              <td class="pt-1 py-1 border-t border-dividerDark2" />
+              <td class="pt-1 py-1 border-t border-dividerDark2" />
+              <td class="pt-1 py-1 border-t border-dividerDark2" />
             </tr>
+            <template v-for="value in values">
+              <tr>
+                <td class="pl-3 py-2">{{ useDateDayMonthYear(value.date) }}</td>
+                <td>{{ value.hours }}</td>
+                <td>{{ value.project }}</td>
+                <td>{{ value.type }}</td>
+                <td>{{ value.description }}</td>
+                <td>{{ value.wbsoHours }}</td>
+              </tr>
+            </template>
           </template>
-        </template>
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </template>
   </div>
 </template>
 
