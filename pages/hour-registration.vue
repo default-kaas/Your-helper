@@ -41,7 +41,7 @@
       </div>
       <!-- Hourfrom table -->
       <table class="table-auto border-collapse">
-        <thead class="shadow-lg shadow-white-500/50">
+        <thead>
           <tr class="text-left font-semibold sticky top-0 bg-blackMain">
             <th class="py-2 px-3 border-b border-dividerDark2">Dag</th>
             <th class="pr-3 border-b border-dividerDark2">Uren</th>
