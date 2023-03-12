@@ -6,6 +6,13 @@
       <!-- Table of contents -->
       <div class="fixed left-12 py-3 px-6 border border-dividerDark2 rounded">
         <div class="flex py-1">
+          <h2 class="font-semibold">Table of contents</h2>
+        </div>
+        <div class="flex py-1">
+          <TextHashTag />
+          <h3 class="font-semibold">Hour registration</h3>
+        </div>
+        <div class="flex py-1">
           <h2 class="font-semibold">Weeks:</h2>
         </div>
         <div class="flex py-1">
@@ -24,19 +31,28 @@
       <!-- Stats -->
       <div class="fixed right-12 py-3 px-6 border border-dividerDark2 rounded">
         <div class="flex py-1">
-          <h2 class="font-semibold">Weeks:</h2>
+          <h2 class="font-semibold">Hours</h2>
         </div>
         <div class="flex py-1">
-          <TextHashTag />
-          <h3 class="font-semibold">Week 1</h3>
+          <h2 class="font-semibold">Total:</h2>
         </div>
         <div class="flex py-1">
-          <TextHashTag />
-          <h3 class="font-semibold">Week 2</h3>
+          <h2 class="font-semibold">WBSO:</h2>
         </div>
         <div class="flex py-1">
-          <TextHashTag />
-          <h3 class="font-semibold">Week 3</h3>
+          <h2 class="font-semibold">Projects:</h2>
+        </div>
+        <div class="flex py-1">
+          <h3 class="font-semibold bg-purpleDarker px-1 rounded">EDU</h3>
+        </div>
+        <div class="flex py-1">
+          <h3 class="font-semibold bg-redDarker px-1 rounded">YNC</h3>
+        </div>
+        <div class="flex py-1">
+          <h2 class="font-semibold">Catergorie:</h2>
+        </div>
+        <div class="flex py-1">
+          <h3 class="font-semibold bg-blueDarker px-1 rounded">DEV</h3>
         </div>
       </div>
       <!-- Hourfrom table -->
