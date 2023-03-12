@@ -1,5 +1,9 @@
 // https://www.npmjs.com/package/read-excel-file
+import dayjs from "dayjs";
+import weekOfYear from "dayjs/plugin/weekOfYear"
 import readXlsxFile from "read-excel-file";
+import { Dictionary } from "lodash";
+dayjs.extend(weekOfYear)
 
 type titleField = {
   typeOfField: String;
@@ -14,6 +18,7 @@ type titleField = {
 type hourRegestrationField = {
   typeOfField: String;
   date: Date;
+  weekNumberBasedOnDate: Number;
   hours: Number;
   project: String;
   type: String;
@@ -53,23 +58,16 @@ export function useIsHourRegestrationField(
   return false;
 }
 
-export type ReadExcelType = null | [titleField | hourRegestrationField | weekNumberField | undefined]
+export type ReadExcelType = null | Dictionary<hourRegestrationField[]>
 
 export async function useReadExcel(input: HTMLElement) {
   if (input?.files) {
-    return readXlsxFile(input?.files[0]).then((rows) => {
-      console.log(rows)
+    const result = await readXlsxFile(input?.files[0]).then((rows) => {
       // TODO: find a better way to parse the row array to an type array
       const parsedResult = rows.map((row) => {
         // console.log(row);
         // TODO: find a better way to parse this
-        if (row[1] === null) {
-          return {
-            typeOfField: 'weekNumberField',
-            date: row[0],
-          } as weekNumberField;
-        } else if (row[1] && !(typeof row[1] ===  'number')) {
-          console.log('Title?')
+        if (row[1] && !(typeof row[1] ===  'number')) {
           return {
             // TODO: find a better way to map array values to an interface
             typeOfField: 'titleField',
@@ -85,6 +83,7 @@ export async function useReadExcel(input: HTMLElement) {
           return {
             typeOfField: 'hourRegestrationField',
             date: row[0] as unknown as Date,
+            weekNumberBasedOnDate: dayjs(row[0] as unknown as Date).week(),
             hours: row[1] as Number,
             project: row[2] as String,
             type: row[3] as String,
@@ -98,6 +97,9 @@ export async function useReadExcel(input: HTMLElement) {
         | null
       return parsedResult
     });
+    const onlyHourRegestrationFields = result?.filter(row => row && useIsHourRegestrationField(row)) as [hourRegestrationField]
+    const groupedHourRegestrationFields = useGroupBy(onlyHourRegestrationFields, row => row.weekNumberBasedOnDate)
+    return groupedHourRegestrationFields
   }
   return null
 }

@@ -1,35 +1,29 @@
 <template>
   <div>
-    <!-- <h1 class="text-textDark1">Excel reader test</h1> -->
     <TextH1 :text="'Hour registration'" />
     <input v-on:change="readExcel" type="file" id="input" />
     <table
       v-if="excelDataRowsFile"
-      class="table-auto border-separate border-spacing-x-2 border-spacing-y-2"
+      class="table-auto border-separate border-spacing-x-3 border-spacing-y-2"
     >
-      <template v-for="excelDataRow in excelDataRowsFile">
-        <!-- test
-        {{ excelDataRow }}
-        {{ isTitleField(excelDataRow) }}
-        {{ isHourRegestrationField(excelDataRow) }} -->
-        <thead v-if="useIsTitleField(excelDataRow)">
-          <tr class="text-left font-semibold">
-            <th>{{ excelDataRow.dayTitle }}</th>
-            <th>{{ excelDataRow.hoursTitle }}</th>
-            <th>{{ excelDataRow.projectTitle }}</th>
-            <th>{{ excelDataRow.categorieTitle }}</th>
-            <th>{{ excelDataRow.descriptionTitle }}</th>
-            <th>{{ excelDataRow.wbsoHoursTitle }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="border-b border-dividerDark2"
-            v-if="useIsWeekNumberField(excelDataRow)"
-          >
+      <thead>
+        <tr class="text-left font-semibold sticky top-0 bg-blackMain">
+          <th>Dag</th>
+          <th>Uren</th>
+          <th>Projects</th>
+          <th>Catergorie</th>
+          <th>Evt. aanvullende beschrijving</th>
+          <th>WBSO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template v-for="values in excelDataRowsFile">
+          <tr class="border-b border-dividerDark2">
             <td class="flex">
               <TextHashTag />
-              <h3 class="font-semibold">{{ excelDataRow.date }}</h3>
+              <h3 class="font-semibold">
+                Week {{ values[0].weekNumberBasedOnDate }}
+              </h3>
             </td>
             <td />
             <td />
@@ -37,19 +31,18 @@
             <td />
             <td />
           </tr>
-          <tr
-            class="border-b border-dividerDark2"
-            v-if="useIsHourRegestrationField(excelDataRow)"
-          >
-            <td>{{ useDateDayMonthYear(excelDataRow.date) }}</td>
-            <td>{{ excelDataRow.hours }}</td>
-            <td>{{ excelDataRow.project }}</td>
-            <td>{{ excelDataRow.type }}</td>
-            <td>{{ excelDataRow.description }}</td>
-            <td>{{ excelDataRow.wbsoHours }}</td>
-          </tr>
-        </tbody>
-      </template>
+          <template v-for="value in values">
+            <tr class="border-b border-dividerDark2">
+              <td>{{ useDateDayMonthYear(value.date) }}</td>
+              <td>{{ value.hours }}</td>
+              <td>{{ value.project }}</td>
+              <td>{{ value.type }}</td>
+              <td>{{ value.description }}</td>
+              <td>{{ value.wbsoHours }}</td>
+            </tr>
+          </template>
+        </template>
+      </tbody>
     </table>
   </div>
 </template>
@@ -59,11 +52,8 @@ import { ReadExcelType } from "~~/composables/useReadExcelFile";
 async function readExcel() {
   const input = document.getElementById("input");
   if (input) {
-    const test = await useReadExcel(input);
-    console.log(test);
-    excelDataRowsFile.value = test;
+    excelDataRowsFile.value = await useReadExcel(input);
   }
 }
 const excelDataRowsFile = ref<ReadExcelType>();
-const indexCounter = ref(0);
 </script>
