@@ -68,3 +68,35 @@ export function useCaclulateWBSOHours(onlyHourRegestrationFields: [hourRegestrat
   }
   return totalWBSOHours
 }
+
+export function useCaclulateProjectHours(onlyHourRegestrationFields: [hourRegestrationField]){
+  const projectHours = new Map<string,number>();
+  for (let i = 0; i < onlyHourRegestrationFields.length; i++){
+    if(onlyHourRegestrationFields[i].project && onlyHourRegestrationFields[i].hours){
+      if(!projectHours.has(onlyHourRegestrationFields[i].project)){
+        projectHours.set(onlyHourRegestrationFields[i].project, 0)
+      }
+      const value = projectHours.get(onlyHourRegestrationFields[i].project)
+      if(value){
+        projectHours.set(onlyHourRegestrationFields[i].project, value + onlyHourRegestrationFields[i].hours)
+      }
+    }
+  }
+  return projectHours
+}
+
+export function useCaclulateTypeHours(onlyHourRegestrationFields: [hourRegestrationField]){
+  const typeHours = new Map<string,number>();
+  for (let i = 0; i < onlyHourRegestrationFields.length; i++){
+    if(onlyHourRegestrationFields[i].project && onlyHourRegestrationFields[i].hours){
+      if(!typeHours.has(onlyHourRegestrationFields[i].project)){
+        typeHours.set(onlyHourRegestrationFields[i].project, 0)
+      }
+      const value = typeHours.get(onlyHourRegestrationFields[i].project)
+      if(value){
+        typeHours.set(onlyHourRegestrationFields[i].project, value + onlyHourRegestrationFields[i].hours)
+      }
+    }
+  }
+  return typeHours
+}
