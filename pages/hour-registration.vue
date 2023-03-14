@@ -15,17 +15,13 @@
         <div class="flex py-1">
           <h2 class="font-semibold">Weeks:</h2>
         </div>
-        <div class="flex py-1">
+        <div
+          v-for="weekNumber in Object.keys(excelDataRowsFile)"
+          :key="weekNumber"
+          class="flex py-1"
+        >
           <TextHashTag />
-          <h3 class="font-semibold">Week 1</h3>
-        </div>
-        <div class="flex py-1">
-          <TextHashTag />
-          <h3 class="font-semibold">Week 2</h3>
-        </div>
-        <div class="flex py-1">
-          <TextHashTag />
-          <h3 class="font-semibold">Week 3</h3>
+          <h3 class="font-semibold">Week {{ weekNumber }}</h3>
         </div>
       </div>
       <!-- Stats -->
@@ -86,12 +82,14 @@
             </tr>
             <template v-for="value in values">
               <tr>
-                <td class="pl-3 py-2">{{ useDateDayMonthYear(value.date) }}</td>
-                <td>{{ value.hours }}</td>
-                <td>{{ value.project }}</td>
-                <td>{{ value.type }}</td>
-                <td>{{ value.description }}</td>
-                <td>{{ value.wbsoHours }}</td>
+                <td class="pl-3 py-2 px-2">
+                  {{ useDateDayMonthYear(value.date) }}
+                </td>
+                <td class="px-2 text-right">{{ value.hours }}</td>
+                <td class="px-2">{{ value.project }}</td>
+                <td class="px-2">{{ value.type }}</td>
+                <td class="px-2">{{ value.description }}</td>
+                <td class="px-2">{{ value.wbsoHours }}</td>
               </tr>
             </template>
           </template>
