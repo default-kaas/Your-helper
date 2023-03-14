@@ -46,3 +46,25 @@ export async function useReadExcel(input: HTMLElement) {
   }
   return null
 }
+
+export function useGroupedByWeekNumber(onlyHourRegestrationFields: [hourRegestrationField]){
+  return useGroupBy(onlyHourRegestrationFields, row => row.weekNumberBasedOnDate)
+}
+
+export function useGroupedByProject(onlyHourRegestrationFields: [hourRegestrationField]){
+  return useGroupBy(onlyHourRegestrationFields, row => row.project)
+}
+
+export function useGroupedByType(onlyHourRegestrationFields: [hourRegestrationField]){
+  return useGroupBy(onlyHourRegestrationFields, row => row.type)
+}
+
+export function useCaclulateWBSOHours(onlyHourRegestrationFields: [hourRegestrationField]){
+  let totalWBSOHours = 0;
+  for (let i = 0; i < onlyHourRegestrationFields.length; i++){
+    if(onlyHourRegestrationFields[i].wbsoHours){
+      totalWBSOHours += onlyHourRegestrationFields[i].wbsoHours
+    }
+  }
+  return totalWBSOHours
+}
