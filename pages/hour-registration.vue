@@ -104,7 +104,10 @@ import { ReadExcelType } from "~~/composables/useReadExcelFile";
 async function readExcel() {
   const input = document.getElementById("input");
   if (input) {
-    excelDataRowsFile.value = await useReadExcel(input);
+    const result = await useReadExcel(input);
+    if (result) {
+      excelDataRowsFile.value = useGroupedByWeekNumber(result);
+    }
   }
 }
 const excelDataRowsFile = ref<ReadExcelType>();

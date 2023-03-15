@@ -40,9 +40,7 @@ export async function useReadExcel(input: HTMLElement) {
         | null
       return parsedResult
     });
-    const onlyHourRegestrationFields = result?.filter(row => row) as [hourRegestrationField]
-    const groupedHourRegestrationFields = useGroupBy(onlyHourRegestrationFields, row => row.weekNumberBasedOnDate)
-    return groupedHourRegestrationFields
+    return result?.filter(row => row) as [hourRegestrationField]
   }
   return null
 }
