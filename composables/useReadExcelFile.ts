@@ -57,6 +57,16 @@ export function useGroupedByType(onlyHourRegestrationFields: [hourRegestrationFi
   return useGroupBy(onlyHourRegestrationFields, row => row.type)
 }
 
+export function useCaclulateTotalHours(onlyHourRegestrationFields: [hourRegestrationField]){
+  let totalHours = 0;
+  for (let i = 0; i < onlyHourRegestrationFields.length; i++){
+    if(onlyHourRegestrationFields[i].hours){
+      totalHours += onlyHourRegestrationFields[i].hours
+    }
+  }
+  return totalHours
+}
+
 export function useCaclulateWBSOHours(onlyHourRegestrationFields: [hourRegestrationField]){
   let totalWBSOHours = 0;
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
@@ -67,6 +77,8 @@ export function useCaclulateWBSOHours(onlyHourRegestrationFields: [hourRegestrat
   return totalWBSOHours
 }
 
+export type CaclulateHoursType = Map<string,number> | null
+
 export function useCaclulateProjectHours(onlyHourRegestrationFields: [hourRegestrationField]){
   const projectHours = new Map<string,number>();
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
@@ -75,7 +87,7 @@ export function useCaclulateProjectHours(onlyHourRegestrationFields: [hourRegest
         projectHours.set(onlyHourRegestrationFields[i].project, 0)
       }
       const value = projectHours.get(onlyHourRegestrationFields[i].project)
-      if(value){
+      if(value !== undefined){
         projectHours.set(onlyHourRegestrationFields[i].project, value + onlyHourRegestrationFields[i].hours)
       }
     }
@@ -86,13 +98,13 @@ export function useCaclulateProjectHours(onlyHourRegestrationFields: [hourRegest
 export function useCaclulateTypeHours(onlyHourRegestrationFields: [hourRegestrationField]){
   const typeHours = new Map<string,number>();
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
-    if(onlyHourRegestrationFields[i].project && onlyHourRegestrationFields[i].hours){
-      if(!typeHours.has(onlyHourRegestrationFields[i].project)){
-        typeHours.set(onlyHourRegestrationFields[i].project, 0)
+    if(onlyHourRegestrationFields[i].type && onlyHourRegestrationFields[i].hours){
+      if(!typeHours.has(onlyHourRegestrationFields[i].type)){
+        typeHours.set(onlyHourRegestrationFields[i].type, 0)
       }
-      const value = typeHours.get(onlyHourRegestrationFields[i].project)
-      if(value){
-        typeHours.set(onlyHourRegestrationFields[i].project, value + onlyHourRegestrationFields[i].hours)
+      const value = typeHours.get(onlyHourRegestrationFields[i].type)
+      if(value !== undefined){
+        typeHours.set(onlyHourRegestrationFields[i].type, value + onlyHourRegestrationFields[i].hours)
       }
     }
   }
