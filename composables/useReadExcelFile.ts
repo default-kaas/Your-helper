@@ -5,7 +5,7 @@ import readXlsxFile from "read-excel-file";
 import { Dictionary } from "lodash";
 dayjs.extend(weekOfYear)
 
-type hourRegestrationField = {
+export type hourRegestrationField = {
   typeOfField: string;
   date: Date;
   weekNumberBasedOnDate: number;
@@ -45,19 +45,19 @@ export async function useReadExcel(input: HTMLElement) {
   return null
 }
 
-export function useGroupedByWeekNumber(onlyHourRegestrationFields: [hourRegestrationField]){
+export function useGroupedByWeekNumber(onlyHourRegestrationFields: hourRegestrationField[]){
   return useGroupBy(onlyHourRegestrationFields, row => row.weekNumberBasedOnDate)
 }
 
-export function useGroupedByProject(onlyHourRegestrationFields: [hourRegestrationField]){
+export function useGroupedByProject(onlyHourRegestrationFields: hourRegestrationField[]){
   return useGroupBy(onlyHourRegestrationFields, row => row.project)
 }
 
-export function useGroupedByType(onlyHourRegestrationFields: [hourRegestrationField]){
+export function useGroupedByType(onlyHourRegestrationFields: hourRegestrationField[]){
   return useGroupBy(onlyHourRegestrationFields, row => row.type)
 }
 
-export function useCaclulateTotalHours(onlyHourRegestrationFields: [hourRegestrationField]){
+export function useCaclulateTotalHours(onlyHourRegestrationFields: hourRegestrationField[]){
   let totalHours = 0;
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].hours){
@@ -67,7 +67,7 @@ export function useCaclulateTotalHours(onlyHourRegestrationFields: [hourRegestra
   return totalHours
 }
 
-export function useCaclulateWBSOHours(onlyHourRegestrationFields: [hourRegestrationField]){
+export function useCaclulateWBSOHours(onlyHourRegestrationFields: hourRegestrationField[]){
   let totalWBSOHours = 0;
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].wbsoHours){
@@ -79,7 +79,7 @@ export function useCaclulateWBSOHours(onlyHourRegestrationFields: [hourRegestrat
 
 export type CaclulateHoursType = Map<string,number> | null
 
-export function useCaclulateProjectHours(onlyHourRegestrationFields: [hourRegestrationField]){
+export function useCaclulateProjectHours(onlyHourRegestrationFields: hourRegestrationField[]){
   const projectHours = new Map<string,number>();
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].project && onlyHourRegestrationFields[i].hours){
@@ -95,7 +95,7 @@ export function useCaclulateProjectHours(onlyHourRegestrationFields: [hourRegest
   return projectHours
 }
 
-export function useCaclulateTypeHours(onlyHourRegestrationFields: [hourRegestrationField]){
+export function useCaclulateTypeHours(onlyHourRegestrationFields: hourRegestrationField[]){
   const typeHours = new Map<string,number>();
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].type && onlyHourRegestrationFields[i].hours){
