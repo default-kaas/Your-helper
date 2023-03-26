@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <template v-for="values in excelDataRowsFile">
-            <tr>
+            <tr :id="`week-${values[0].weekNumberBasedOnDate}`">
               <td class="pl-3 pt-1 py-2 border-t border-dividerDark2">
                 <div class="flex">
                   <TextHashTag />
@@ -70,3 +70,10 @@ async function readExcel() {
 const tempResult = ref<hourRegestrationField[] | null>();
 const excelDataRowsFile = ref<ReadExcelType>();
 </script>
+
+<style>
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 45px;
+}
+</style>

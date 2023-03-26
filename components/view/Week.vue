@@ -1,23 +1,24 @@
 <template>
-  <div class="fixed left-12 py-3 px-6 border border-dividerDark2 rounded">
+  <div class="fixed left-4 top-64 py-3 px-6 border border-dividerDark2 rounded">
     <div class="flex py-1">
       <h2 class="font-semibold">Table of contents</h2>
     </div>
-    <div class="flex py-1">
+    <a class="flex py-1">
       <TextHashTag />
       <h3 class="font-semibold">Hour registration</h3>
-    </div>
+    </a>
     <div class="flex py-1">
       <h2 class="font-semibold">Weeks:</h2>
     </div>
-    <div
+    <a
       v-for="weekNumber in Object.keys(excelDataRowsFile)"
       :key="weekNumber"
       class="flex py-1"
+      :href="`#week-${weekNumber}`"
     >
       <TextHashTag />
       <h3 class="font-semibold">Week {{ weekNumber }}</h3>
-    </div>
+    </a>
   </div>
 </template>
 
