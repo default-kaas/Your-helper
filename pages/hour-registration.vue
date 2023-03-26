@@ -74,6 +74,6 @@ const excelDataRowsFile = ref<ReadExcelType>();
 <style>
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 45px;
+  scroll-padding-top: 35px;
 }
 </style>
