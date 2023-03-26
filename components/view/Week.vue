@@ -5,7 +5,9 @@
     </div>
     <a class="flex py-1">
       <TextHashTag />
-      <h3 class="font-semibold">Hour registration</h3>
+      <a :href="'#Hour registration'" class="font-semibold"
+        >Hour registration</a
+      >
     </a>
     <div class="flex py-1">
       <h2 class="font-semibold">Weeks:</h2>
