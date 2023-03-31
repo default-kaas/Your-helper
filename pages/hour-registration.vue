@@ -45,6 +45,20 @@
                 <td class="px-2">{{ value.wbsoHours }}</td>
               </tr>
             </template>
+            <tr>
+              <td class="pl-3 py-2 px-2"></td>
+              <td class="px-2 text-right"></td>
+              <td class="px-2"></td>
+              <td class="px-2 py-2 flex justify-center">
+                <button
+                  class="flex flex-col justify-center items-center bg-greenMain hover:bg-greenDark rounded-full w-6 h-6 text-textLight1 font-black"
+                >
+                  +
+                </button>
+              </td>
+              <td class="px-2"></td>
+              <td class="px-2"></td>
+            </tr>
           </template>
         </tbody>
       </table>
