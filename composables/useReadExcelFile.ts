@@ -5,7 +5,7 @@ import readXlsxFile from "read-excel-file";
 import { Dictionary } from "lodash";
 dayjs.extend(weekOfYear)
 
-export type hourRegestrationField = {
+export type hourRegestrationFieldType = {
   typeOfField: string;
   date: Date;
   weekNumberBasedOnDate: number;
@@ -16,15 +16,18 @@ export type hourRegestrationField = {
   wbsoHours: number;
 };
 
-export type ReadExcelType = null | Dictionary<hourRegestrationField[]>
+export type readExcelType = null | Dictionary<hourRegestrationFieldType[]>
 
+export type caclulateHoursType = Map<string,number> | null
+
+//#region Read excel
 export async function useReadExcel(input: HTMLElement) {
   if (input?.files) {
     const result = await readXlsxFile(input?.files[0]).then((rows) => {
       const parsedResult = rows.map((row) => {        
         if (row[1] !== null && typeof row[1] ===  'number') {
           return {
-            typeOfField: 'hourRegestrationField',
+            typeOfField: 'hourRegestrationFieldType',
             date: row[0] as unknown as Date,
             weekNumberBasedOnDate: dayjs(row[0] as unknown as Date).week(),
             hours: row[1] as number,
@@ -32,32 +35,34 @@ export async function useReadExcel(input: HTMLElement) {
             type: row[3] as string,
             description: row[4] as string,
             wbsoHours: row[5] as number,
-          } as hourRegestrationField;
+          } as hourRegestrationFieldType;
         }
         return undefined;
       }) as
-        | [hourRegestrationField | undefined]
+        | [hourRegestrationFieldType | undefined]
         | null
       return parsedResult
     });
-    return result?.filter(row => row) as [hourRegestrationField]
+    return result?.filter(row => row) as [hourRegestrationFieldType]
   }
   return null
 }
+//#endregion
 
-export function useGroupedByWeekNumber(onlyHourRegestrationFields: hourRegestrationField[]){
+//#region Grouped by
+export function useGroupedByWeekNumber(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   return useGroupBy(onlyHourRegestrationFields, row => row.weekNumberBasedOnDate)
 }
-
-export function useGroupedByProject(onlyHourRegestrationFields: hourRegestrationField[]){
+export function useGroupedByProject(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   return useGroupBy(onlyHourRegestrationFields, row => row.project)
 }
-
-export function useGroupedByType(onlyHourRegestrationFields: hourRegestrationField[]){
+export function useGroupedByType(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   return useGroupBy(onlyHourRegestrationFields, row => row.type)
 }
+//#endregion
 
-export function useCaclulateTotalHours(onlyHourRegestrationFields: hourRegestrationField[]){
+//#region Calculate hours
+export function useCaclulateTotalHours(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   let totalHours = 0;
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].hours){
@@ -66,8 +71,7 @@ export function useCaclulateTotalHours(onlyHourRegestrationFields: hourRegestrat
   }
   return totalHours
 }
-
-export function useCaclulateWBSOHours(onlyHourRegestrationFields: hourRegestrationField[]){
+export function useCalculateWBSOHours(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   let totalWBSOHours = 0;
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].wbsoHours){
@@ -76,10 +80,7 @@ export function useCaclulateWBSOHours(onlyHourRegestrationFields: hourRegestrati
   }
   return totalWBSOHours
 }
-
-export type CaclulateHoursType = Map<string,number> | null
-
-export function useCaclulateProjectHours(onlyHourRegestrationFields: hourRegestrationField[]){
+export function useCalculateProjectHours(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   const projectHours = new Map<string,number>();
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].project && onlyHourRegestrationFields[i].hours){
@@ -94,8 +95,7 @@ export function useCaclulateProjectHours(onlyHourRegestrationFields: hourRegestr
   }
   return projectHours
 }
-
-export function useCaclulateTypeHours(onlyHourRegestrationFields: hourRegestrationField[]){
+export function useCalculateTypeHours(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   const typeHours = new Map<string,number>();
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].type && onlyHourRegestrationFields[i].hours){
@@ -110,3 +110,4 @@ export function useCaclulateTypeHours(onlyHourRegestrationFields: hourRegestrati
   }
   return typeHours
 }
+//#endregion

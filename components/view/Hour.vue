@@ -68,7 +68,7 @@
 <script setup lang="ts">
 import {
   hourRegestrationField,
-  CaclulateHoursType,
+  caclulateHoursType,
   ReadExcelType,
 } from "~~/composables/useReadExcelFile";
 import { Dictionary } from "lodash";
@@ -79,8 +79,8 @@ const props = defineProps({
   },
 });
 
-const projectHours = ref<CaclulateHoursType>();
-const typeHours = ref<CaclulateHoursType>();
+const projectHours = ref<caclulateHoursType>();
+const typeHours = ref<caclulateHoursType>();
 const totalHours = ref<number>();
 const wbsoHours = ref<number>();
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <TextH1 :text="'Hour registration'" />
-    <input v-on:change="readExcel" type="file" id="input" />
+    <input v-on:change="loading(readExcel())" :disabled="isLoading" type="file" id="input" />
     <template v-if="excelDataRowsFile">
       <viewWeek :excelDataRowsFile="excelDataRowsFile" />
       <viewHour v-if="tempResult" :excelDataRowsFile="tempResult" />
@@ -54,9 +54,10 @@
 
 <script setup lang="ts">
 import {
-  hourRegestrationField,
-  ReadExcelType,
+  hourRegestrationFieldType,
+  readExcelType,
 } from "~~/composables/useReadExcelFile";
+const { isLoading, loading } = useLoading()
 async function readExcel() {
   const input = document.getElementById("input");
   if (input) {
@@ -67,8 +68,8 @@ async function readExcel() {
     }
   }
 }
-const tempResult = ref<hourRegestrationField[] | null>();
-const excelDataRowsFile = ref<ReadExcelType>();
+const tempResult = ref<hourRegestrationFieldType[] | null>();
+const excelDataRowsFile = ref<readExcelType>();
 </script>
 
 <style>
