@@ -18,7 +18,7 @@
         </thead>
         <tbody>
           <template v-for="values in excelDataRowsFile">
-            <tr :id="`week-${values[0].weekNumberBasedOnDate}`">
+            <tr class="sticky top-9 bg-blackMain" :id="`week-${values[0].weekNumberBasedOnDate}`">
               <td class="pl-3 pt-1 py-2 border-t border-dividerDark2">
                 <div class="flex">
                   <TextHashTag />
