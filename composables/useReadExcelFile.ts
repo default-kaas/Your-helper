@@ -62,7 +62,7 @@ export function useGroupedByType(onlyHourRegestrationFields: hourRegestrationFie
 //#endregion
 
 //#region Calculate hours
-export function useCaclulateTotalHours(onlyHourRegestrationFields: hourRegestrationFieldType[]){
+export function useCalculateTotalHours(onlyHourRegestrationFields: hourRegestrationFieldType[]){
   let totalHours = 0;
   for (let i = 0; i < onlyHourRegestrationFields.length; i++){
     if(onlyHourRegestrationFields[i].hours){

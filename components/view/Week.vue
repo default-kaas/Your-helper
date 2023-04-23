@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed left-4 top-64 py-3 px-6 border border-dividerDark2 rounded">
+  <aside class="fixed left-4 top-64 py-3 px-6 border border-dividerDark2 rounded">
     <div class="flex py-1">
       <h2 class="font-semibold">Table of contents</h2>
     </div>
@@ -21,15 +21,15 @@
       <TextHashTag />
       <h3 class="font-semibold">Week {{ weekNumber }}</h3>
     </a>
-  </div>
+  </aside>
 </template>
 
 <script setup lang="ts">
-import { hourRegestrationField } from "~~/composables/useReadExcelFile";
+import { hourRegestrationFieldType } from "~~/composables/useReadExcelFile";
 import { Dictionary } from "lodash";
 defineProps({
   excelDataRowsFile: {
-    type: Object as () => Dictionary<hourRegestrationField[]>,
+    type: Object as () => Dictionary<hourRegestrationFieldType[]>,
     required: true,
   },
 });

@@ -1,5 +1,5 @@
 <template>
-  <div
+  <aside
     class="fixed right-4 top-64 py-3 px-6 border border-dividerDark2 rounded"
   >
     <table class="table-auto border-collapse">
@@ -62,19 +62,17 @@
         </template>
       </tbody>
     </table>
-  </div>
+  </aside>
 </template>
 
 <script setup lang="ts">
 import {
-  hourRegestrationField,
+  hourRegestrationFieldType,
   caclulateHoursType,
-  ReadExcelType,
 } from "~~/composables/useReadExcelFile";
-import { Dictionary } from "lodash";
 const props = defineProps({
   excelDataRowsFile: {
-    type: Object as () => hourRegestrationField[],
+    type: Object as () => hourRegestrationFieldType[],
     required: true,
   },
 });
@@ -84,10 +82,10 @@ const typeHours = ref<caclulateHoursType>();
 const totalHours = ref<number>();
 const wbsoHours = ref<number>();
 
-projectHours.value = useCaclulateProjectHours(props.excelDataRowsFile);
-typeHours.value = useCaclulateTypeHours(props.excelDataRowsFile);
-totalHours.value = useCaclulateTotalHours(props.excelDataRowsFile);
-wbsoHours.value = useCaclulateWBSOHours(props.excelDataRowsFile);
+projectHours.value = useCalculateProjectHours(props.excelDataRowsFile);
+typeHours.value = useCalculateTypeHours(props.excelDataRowsFile);
+totalHours.value = useCalculateTotalHours(props.excelDataRowsFile);
+wbsoHours.value = useCalculateWBSOHours(props.excelDataRowsFile);
 
 const temporaryCounter = ref<number>(0);
 function temporaryRandomColor() {
